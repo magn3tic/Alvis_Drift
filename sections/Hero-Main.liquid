@@ -1,0 +1,360 @@
+<section>
+	<script>
+		/* important javascript script to add parallax effect to Home Page */
+		/*********** DON'T REMOVE THIS CODE FORM THIS PAGE ***********/
+		var body = document.body;
+		body.classList.add("parallax-h");
+	</script>   
+  
+  <!-- Slider/overlay-->
+  
+<div class="hero-section-slider">
+{% for block in section.blocks %}
+ <div class="hero-section">
+  <img class="hero-section-bg" src="{{ block.settings.background_image | img_url:'master' }}" width="100%" height = "100%">
+    {% if block.settings.image_overlay != blank and block.settings.image_overlay != 'rgba(0,0,0,0)' and block.settings.overlay_opacity != blank %}
+    {% assign bg_color = block.settings.image_overlay | color_to_rgb %}       
+    {% assign opacity = block.settings.overlay_opacity %}       
+    {% assign opacityWithEndBracket = ', ' | append: opacity | append: '%)' %}  
+    {% assign rgba = bg_color | replace: 'rgb', 'rgba' | replace:')', opacityWithEndBracket %} 
+    <div class="hero-overlay-bg" style="background: {{ rgba }}"></div>
+  {% else %}
+    <div class="hero-overlay-bg"></div>
+  {% endif %}
+  <div class="hero-section-inner">
+    <div class="hero-content">
+      <div class="hero-title">
+        <h2>
+          {% comment %}
+          <span>{{ block.settings.paragarh_p }}</span>
+          {% endcomment %}
+          <span>
+            <p class="animate-reveal">{{ block.settings.paragarh_p1 }}</p>
+            <p class="animate-reveal">{{ block.settings.paragarh_p2 }}</p>
+            <p class="animate-reveal">{{ block.settings.paragarh_p3 }}</p>
+            <p class="animate-reveal">{{ block.settings.paragarh_p4 }}</p>
+            <p class="animate-reveal">{{ block.settings.paragarh_p5 }}</p>
+          </span>
+          
+        </h2> 
+      </div>
+      </div>
+      <div class="hero-txt"> 
+        {% if block.settings.paragarh_1 != blank or block.settings.paragarh_2 != blank %}
+        <div class="scrl-sec">
+            <span class="scrl-circle"></span>
+            <span class="scrl-line"></span>
+        </div>
+        <div class="hero-txt-c">                    
+          <p class="sub-title">{{ block.settings.paragarh_1 }}</p>
+          <p>{{ block.settings.paragarh_2 }}</p>
+        </div>
+        {% endif %}
+      </div> 
+    </div>         
+    {% if block.settings.video_banner != blank %}
+      <div class="hero-video-btn">
+        <a class="hero-video-btn-link" data-autoplay="true" data-vbtype="video" href="https://youtu.be/{{ block.settings.video_banner.id }}?modestbranding=0&autohide=1&showinfo=0&autoplay=0&playsinline=1&autohide=0&disablekb=1&showinfo=0&loop=0&fs=0&rel=0">{% render 'icon-video-btn' %}</a>
+      </div>
+    {% endif %}
+        
+    {% if block.settings.btn_link != blank and block.settings.btn_text != blank %}
+      <div class="hero-btn-wrap">
+        <a href="{{ block.settings.btn_link }}" class="btn">{{ block.settings.btn_text }}</a>
+      </div>
+    {% endif %}
+    <br>
+  </div>
+{% endfor %}
+</div>
+</section>
+
+<style>
+
+
+ .hero-section-bg{
+    position: absolute;
+    top : 0;
+    right : 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+ }
+
+.hero-section{
+    position: relative;
+    width: 100%;
+    
+}
+  
+  .hero-title h2 span p {
+    margin: 0px !important;
+    line-height: 80px;
+}
+  
+.animate-reveal {
+   color: {{ section.settings.Heading_color }};
+   font-size: 70px;
+}
+
+@media only screen and (max-width:850px) {
+  /* For tablets: */
+  .hero-title h2 span p {
+    margin: 0px !important;
+    line-height: 50px;
+}
+}
+  
+@media (min-width:250px) and (max-width:900px) {
+  /* For mobile phones: */
+  .hero-title h2 span p {
+    margin: 0px !important;
+    line-height: 35px;
+}
+    .animate-reveal {
+   color: {{ section.settings.Heading_color }};
+   font-size: 25px;
+   line-height: 1.5;
+}
+}
+ @media (min-width:910px) and (max-width:1380px) {
+  .hero-title h2 span p {
+    margin: 0px !important;
+    line-height: 55px;
+  }
+   .animate-reveal {
+     font-size:50px;
+     line-height:20px;
+   }
+} 
+
+</style>
+
+{% schema %}
+{
+  "name": {
+    "en": "Page Header (Hero)"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "image_overlay",
+      "label": "Image Overlay Color"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30,
+      "label": "Overlay Opacity"
+    },
+	  {
+      "type": "select",
+      "id": "Heading_color",
+      "label": "Heading Colour",
+      "options": [
+        {
+          "value": "#ffffff",
+          "label": "White"
+        },
+        {
+          "value": "#2e112d",
+          "label": "Dark Plum"
+        },
+        {
+          "value": "#f8f2e6",
+          "label": "Light Beige"
+        }, 
+        {
+          "value": "#c0ccbe",
+          "label": "Light Olive"
+        },
+        {
+          "value": "#aac4d3",
+          "label": "Light Blue"
+        },
+        {
+          "value": "#fedcc6",
+          "label": "Light Orange"
+        }
+      ],
+      "default": "#ffffff"
+    },
+    {
+      "type": "video_url",
+      "accept": ["youtube"],
+      "id": "video_banner",
+      "label": "Video URL"    },
+    {
+      "type": "text",
+      "id": "paragarh_p1",
+      "label": "Heading Line 1"
+    },
+    {
+      "type": "text",
+      "id": "paragarh_p2",
+      "label": "Heading Line 2"
+    },
+    {
+      "type": "text",
+      "id": "paragarh_p3",
+      "label": "Heading Line 3"
+    },
+    {
+      "type": "text",
+      "id": "paragarh_p4",
+      "label": "Heading Line 4"
+    },
+    {
+      "type": "text",
+      "id": "paragarh_1",
+      "label": "Paragraph Heading"
+    },
+    {
+      "type": "text",
+      "id": "paragarh_2",
+      "label": "Paragraph Text"
+    },
+    {
+    "type": "text",
+    "id": "btn_text",
+    "label": "Button Text"
+    },
+    {
+    "type": "url",
+    "id": "btn_link",
+    "label": "Button Link"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"slider",
+      "name":"Slide",
+      "settings":[
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "image_overlay",
+          "label": "Image Overlay Color"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 30,
+          "label": "Overlay Opacity"
+        },
+        {
+          "type": "select",
+          "id": "Heading_color",
+          "label": "Heading Colour",
+          "options": [
+            {
+              "value": "#ffffff",
+              "label": "White"
+            },
+            {
+              "value": "#2e112d",
+              "label": "Dark Plum"
+            },
+            {
+              "value": "#f8f2e6",
+              "label": "Light Beige"
+            }, 
+            {
+              "value": "#c0ccbe",
+              "label": "Light Olive"
+            },
+            {
+              "value": "#aac4d3",
+              "label": "Light Blue"
+            },
+            {
+              "value": "#fedcc6",
+              "label": "Light Orange"
+            }
+          ],
+          "default": "#ffffff"
+        },
+        {
+          "type": "video_url",
+          "accept": ["youtube"],
+          "id": "video_banner",
+          "label": "Video URL"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_p1",
+          "label": "Heading Line 1"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_p2",
+          "label": "Heading Line 2"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_p3",
+          "label": "Heading Line 3"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_p4",
+          "label": "Heading Line 4"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_1",
+          "label": "Paragraph Heading"
+        },
+        {
+          "type": "text",
+          "id": "paragarh_2",
+          "label": "Paragraph Text"
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Page Header (Hero)"
+      },
+      "category": {
+        "en": "Banner"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
