@@ -19,7 +19,7 @@
     {% assign rgba = bg_color | replace: 'rgb', 'rgba' | replace:')', opacityWithEndBracket %} 
     <div class="hero-overlay-bg" style="background: {{ rgba }}"></div>
   {% else %}
-    <div class="hero-overlay-bg" style ="background-color:{{ block.settings.image_overlay | color_to_rgb }};opacity:{{ block.settings.overlay_opacity }}"></div>
+    <div class="hero-overlay-bg" style ="background-color:#212121;opacity:{{ block.settings.overlay_opacity }}"></div>
   {% endif %}
   <div class="hero-section-inner">
     <div class="hero-content">
