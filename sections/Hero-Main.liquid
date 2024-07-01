@@ -10,9 +10,9 @@
   
 <div class="hero-section-slider">
 {% for block in section.blocks %}
- <div class="hero-section">
-  <img class="hero-section-bg" src="{{ block.settings.background_image | img_url:'master' }}" width="100%" height = "100%">
-    {% if block.settings.image_overlay != blank and block.settings.image_overlay != 'rgba(0,0,0,0)' and block.settings.overlay_opacity != blank %}
+ <div class="hero-section hero-section--slide">
+  <div class="hero-section-bg "data-src="{{ block.settings.background_image | img_url:'master' }}">
+  {% if block.settings.image_overlay != blank and block.settings.image_overlay != 'rgba(0,0,0,0)' and block.settings.overlay_opacity != blank %}
     {% assign bg_color = block.settings.image_overlay | color_to_rgb %}       
     {% assign opacity = block.settings.overlay_opacity %}       
     {% assign opacityWithEndBracket = ', ' | append: opacity | append: '%)' %}  
@@ -65,28 +65,21 @@
     {% endif %}
     <br>
   </div>
+</div>
 {% endfor %}
 </div>
 </section>
 
 <style>
-
-
+  {% for block in section.blocks %}
  .hero-section-bg{
-    position: absolute;
-    top : 0;
-    right : 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
+   background-image: url({{ block.settings.background_image | img_url:'master' }});
+   background-repeat:no-repeat;
+   background-size:cover;
+   background-position:center center;
+   width:100%;height:100%;
+   z-index:-99999
  }
-
-.hero-section{
-    position: relative;
-    width: 100%;
-    
-}
-  
   .hero-title h2 span p {
     margin: 0px !important;
     line-height: 80px;
@@ -127,7 +120,7 @@
      line-height:20px;
    }
 } 
-
+ {% endfor %}  
 </style>
 
 {% schema %}
